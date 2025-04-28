@@ -1,0 +1,93 @@
+# 🧱 Monolithic Node.js System with Clean Architecture
+
+This project is a reference for building a monolithic Node.js application using clean architecture principles.
+
+The structure focuses on **high cohesion** and **low coupling**, enabling scalability and maintainability.
+
+---
+
+## 🧩 Shared Module (`@shared`)
+
+Common components used across all domains are organized here.
+
+### 1. Domain Layer (`@shared/domain`)
+
+- `entity/`: Contains foundational domain entities.
+  - `AggregateRootInterface`: Marks the aggregate root of a domain.
+  - `BaseEntity`: Includes fields like `id`, `createdAt`, and `updatedAt`.
+
+- `value-object/`: Holds generic, reusable value objects.
+  - `ValueObjectInterface`: Interface shared by all value objects.
+  - `Id`: Encapsulates custom logic for unique identifiers.
+  - `Address`: Shared value object used across multiple domains.
+
+### 2. Use Case Layer (`@shared/usecase`)
+
+- `UseCaseInterface`: Generic contract to keep use cases decoupled from infrastructure.
+                      Defining the method execute to be implemented for the usecases
+                      `execute(input: any): Promise<any>;`
+
+---
+
+## 🧱 Domain Structure
+
+Each domain is isolated and follows a consistent internal structure.
+
+### 1. Domain Layer (`domain/<domain>/domain`)
+
+- Domain model extends `BaseEntity` and may implement `AggregateRootInterface`.
+- Uses a `Props` object in constructor to ensure consistent and typed parameter passing.
+
+### 2. Facade Layer (`domain/<domain>/facade`)
+
+- Entry point for executing domain use cases.
+
+  - `DomainFacadeInterface`: Declares input/output DTOs and all public methods.
+  - `DomainFacade`: Implements the interface and coordinates the use cases.
+                    Related to UseCaseInterface for represent all the usecases to be implemented
+  - `DomainFacade.test.ts`: Tests to guarantee use case behaviors.
+
+### 3. Factory Layer (`domain/<domain>/factory`)
+
+- Constructs all dependencies and wires them into a facade.
+
+  - `DomainFacadeFactory`: Builds repository, use cases, and facade in one place.
+
+### 4. Gateway Layer (`domain/<domain>/gateway`)
+
+- Defines interfaces for repository interactions.
+
+  - `DomainGateway`: Contract for repositories, allowing mock/test implementations.
+
+### 5. Repository Layer (`domain/<domain>/repository`)
+
+- Responsible for persistence logic.
+
+  - ORM Models: Describe data mappings and table structure.
+  - `DomainRepository`: Implements `DomainGateway` with actual DB access.
+  - `Repository.test.ts`: Ensures correct repository functionality.
+
+### 6. Use Cases (`domain/<domain>/usecase`)
+
+- Encapsulates domain-specific business logic.
+
+  - `DomainUseCase`: Uses the gateway, processes logic, and returns a DTO.
+  - `UseCase.test.ts`: Unit tests for use case behavior and edge cases.
+
+---
+
+## ✅ Benefits of This Architecture
+
+- Encourages **modular design**, making it easy to maintain and test.
+- Helps enforce **domain-driven development** even in a monolithic setup.
+- Ensures **single responsibility** and **clean boundaries** between layers.
+
+---
+
+## 🚀 Getting Started
+
+To run this project locally:
+
+```bash
+npm install
+npm run dev

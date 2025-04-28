@@ -1,0 +1,71 @@
+# To get all the expected results about the decoupled and high coehsion gols into this project, these steps were followed
+
+Inside the @shared folder, the following elements were added:
+
+1.1 Folders were created to support all common components across system domains.
+    1.1.1 domain folder
+        entity/ folder:
+            AggregateRootInterface: Indicates which model is the root of the aggregate.
+            BaseEntity: Describes shared fields like id, createdAt, and updatedAt.
+        value-object/ folder:
+            ValueObjectInterface: A contract to be shared across all value objects.
+            Id class: Makes domain IDs a complex type instead of primitive values.
+            Address class: A shared value object used by multiple domains in this project.
+
+    1.1.2 usecase folder
+        UseCaseInterface: Marks all use cases to keep them decoupled from external boundaries.
+        Each domain has its own folder structure, such as:
+
+2.1 domain/ folder
+    Contains a domain model class that:
+
+    Extends BaseEntity.
+    Optionally implements AggregateRootInterface.
+    Uses a constructor that receives a Props object containing all required parameters.
+
+2.2 facade/ folder
+    Provides an entry point for executing domain use cases.
+
+    DomainFacadeInterface: Defines all input and output DTOs and required methods.
+    Implementation class: Implements the interface using the required use cases.
+    Uses UseCaseInterface types and Props to handle parameters.
+    Test class: Verifies the correct behavior of all use cases in the domain.
+
+2.3 factory/ folder
+    Handles the construction of a fully prepared domain facade instance.
+
+    DomainFacadeFactory class:
+    Wires together the repository, use cases, and the facade.
+    Returns a ready-to-use facade instance.
+
+2.4 gateway/ folder
+    Contains DomainGateway interface:
+
+    Declares all required methods for the repository.
+
+2.5 repository/ folder
+    Manages persistence logic for the domain.
+
+    Domain model: Describes entity fields and ORM metadata.
+    DomainRepository: Implements DomainGateway and performs database operations.
+    Test class: Validates the correct functionality of persistence methods.
+
+2.6 Use Case folders (one for each use case)
+    Each folder contains:
+
+    DomainUseCase class:
+    Receives the DomainGateway via constructor.
+    Implements the execute method with input/output DTOs as Props.
+    Instantiates the domain class and performs required operations.
+    Returns a DTO as the result.
+    Test class:
+    Ensures the use case behaves correctly and covers all features.
+
+#STEP BY STEP
+1. Domain / Entity (Busines Logic)
+2. UseCases / DTOs
+3. Gateway
+4. UseCase Tests
+5. Repository / Tests (Database connection)
+6. Facade
+7. Factory
