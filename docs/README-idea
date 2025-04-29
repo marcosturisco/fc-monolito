@@ -62,10 +62,9 @@ Inside the @shared folder, the following elements were added:
     Ensures the use case behaves correctly and covers all features.
 
 #STEP BY STEP
-1. Domain / Entity (Busines Logic)
-2. UseCases / DTOs
+1. Domain (Busines Logic)
+2. UseCases / DTOs / Tests
 3. Gateway
-4. UseCase Tests
-5. Repository / Tests (Database connection)
-6. Facade
-7. Factory
+4. Repository and Entity / Tests (Database connection)
+5. Facade / Tests
+6. Factory / Tests
