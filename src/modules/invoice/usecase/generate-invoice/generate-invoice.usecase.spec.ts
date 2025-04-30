@@ -1,4 +1,3 @@
-import Address from "../../../@shared/domain/value-object/address";
 import Id from "../../../@shared/domain/value-object/id.value-object";
 import Invoice from "../../domain/invoice";
 import InvoiceItems from "../../domain/invoice-items";

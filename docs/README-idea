@@ -68,3 +68,8 @@ Inside the @shared folder, the following elements were added:
 4. Repository and Entity / Tests (Database connection)
 5. Facade / Tests
 6. Factory / Tests
+
+#TIPS
+1. Use the @ts in the session comment to allow incremental development
+    $ //@ts-expect-error - no params in constructor
+2. 
