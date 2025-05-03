@@ -54,7 +54,7 @@ describe("Order Repository test", () => {
         await repository.addOrder(order);
 
         const orderDb = await OrderModel.findOne({ where: { id: order.id.id } });
-        const productsOrderDb = await OrderProductModel.findAll({ where: { orderId: "1" } });
+        const productsOrderDb = await OrderProductModel.findAll({ where: { orderId: order.id.id } });
 
         expect(orderDb.id).toEqual(order.id.id);
         expect(orderDb.clientId).toEqual(order.client.id.id);
