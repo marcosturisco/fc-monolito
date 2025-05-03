@@ -1,6 +1,6 @@
 import Id from "../../../@shared/domain/value-object/id.value-object";
-import Invoice from "../../domain/invoice";
-import InvoiceItems from "../../domain/invoice-items";
+import Invoice from "../../domain/invoice.entity";
+import InvoiceItems from "../../domain/invoice-items.entity";
 import GenerateInvoiceUseCase from "./generate-invoice.usecase";
 
 const MockRepository = () => {

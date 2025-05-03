@@ -5,7 +5,7 @@ import InvoiceRepository from "../repository/invoice.repository"
 import GenerateInvoiceUseCase from "../usecase/generate-invoice/generate-invoice.usecase"
 import InvoiceFacade from "./invoice.facade"
 import Id from "../../@shared/domain/value-object/id.value-object"
-import InvoiceItems from "../domain/invoice-items"
+import InvoiceItems from "../domain/invoice-items.entity"
 import FindInvoiceUseCase from "../usecase/find-invoice/find-invoice.usecase"
 import InvoiceFacadeFactory from "../factory/invoice.facade.factory"
 

@@ -1,5 +1,5 @@
 import Address from "../../../@shared/domain/value-object/address";
-import InvoiceItems from "../../domain/invoice-items";
+import InvoiceItems from "../../domain/invoice-items.entity";
 import InvoiceGateway from "../../gateway/invoice.gateway";
 import { FindInvoiceUseCaseInputDto as FindInvoiceUseCaseInputDto, FindInvoiceUseCaseOutputDto as FindInvoiceUseCaseOutputDto } from "./find-invoice.usecase.dto";
 

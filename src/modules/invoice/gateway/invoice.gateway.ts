@@ -1,4 +1,4 @@
-import Invoice from "../domain/invoice";
+import Invoice from "../domain/invoice.entity";
 
 export default interface InvoiceGateway {
     generate(invoice: Invoice): Promise<void>;
