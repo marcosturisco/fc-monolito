@@ -60,6 +60,8 @@ describe("Order Repository test", () => {
         expect(orderDb.clientId).toEqual(order.client.id.id);
         expect(orderDb.createdAt).toStrictEqual(order.createdAt)
         expect(orderDb.updatedAt).toStrictEqual(order.updatedAt)
+        expect(productsOrderDb[0].productId).toEqual(productsOrder[0].id.id);
+        expect(productsOrderDb[1].productId).toEqual(productsOrder[1].id.id);
         expect(productsOrderDb.length).toEqual(2);
     });
 })
