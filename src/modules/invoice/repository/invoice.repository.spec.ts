@@ -7,9 +7,7 @@ import InvoiceItems from "../domain/invoice-items.entity"
 import InvoiceRepository from "./invoice.repository"
 
 describe("Invoice Repository test", () => {
-
     let sequelize: Sequelize
-
     beforeEach(async () => {
         sequelize = new Sequelize({
             dialect: 'sqlite',
@@ -17,17 +15,14 @@ describe("Invoice Repository test", () => {
             logging: false,
             sync: { force: true }
         })
-
         sequelize.addModels([InvoiceModel, InvoiceItemsModel])
         await sequelize.sync()
     })
-
     afterEach(async () => {
         await sequelize.close()
     })
 
     it("should generate an invoice", async () => {
-
         const invoice = new Invoice({
             id: new Id("1"),
             name: "Invoice A",
@@ -43,8 +38,8 @@ describe("Invoice Repository test", () => {
             ]
         })
 
-        const repository = new InvoiceRepository()
-        await repository.generate(invoice)
+        const repository = new InvoiceRepository();
+        await repository.generate(invoice);
 
         const invoiceDb = await InvoiceModel.findOne({ where: { id: "1" } })
 
@@ -63,7 +58,6 @@ describe("Invoice Repository test", () => {
     })
 
     it("should find an invoice", async () => {
-
         const invoice = await InvoiceModel.create({
             id: "1",
             name: "Invoice A",
