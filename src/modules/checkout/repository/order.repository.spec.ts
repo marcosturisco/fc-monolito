@@ -23,7 +23,7 @@ describe("Order Repository test", () => {
         await sequelize.close()
     })
 
-    it("should generate an order", async () => {
+    it("should create an order", async () => {
         const clientOrder = new Client({
             id: new Id("1"),
             name: "Client 1",
