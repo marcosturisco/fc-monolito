@@ -1,21 +1,31 @@
 import express, { Request, Response } from "express";
+import { v4 as uuidv4 } from 'uuid';
 import ProductAdmFacadeFactory from "../../../product-adm/factory/facade.factory";
+import Id from "../../../@shared/domain/value-object/id.value-object";
+import StoreCatalogFacadeFactory from "../../../store-catalog/factory/facade.factory";
+import ProductCatalogModel from "../../../store-catalog/repository/product.model";
 
 export const productRoute = express.Router();
 
 productRoute.post("/", async (req: Request, res: Response) => {
-    const productFacade = ProductAdmFacadeFactory.create();
+    const productAdmFacade = ProductAdmFacadeFactory.create();
 
     try {
-        const { name, description, purchasePrice, stock } = req.body;
-        const output = await productFacade.addProduct(
-            {
-                name: name,
-                description: description,
-                purchasePrice: purchasePrice,
-                stock: stock
-            }
-        );
+        const id = uuidv4();
+        const { name, description, purchasePrice, stock, salesPrice } = req.body;
+        const inputAdmProduct = {
+            id: id,
+            name: name,
+            description: description,
+            purchasePrice: purchasePrice,
+            stock: stock
+        }
+        const output = await productAdmFacade.addProduct(inputAdmProduct);
+
+        const productCatalog = await ProductCatalogModel.findOne({ where: { id: id } });
+        productCatalog.salesPrice = salesPrice;
+        await productCatalog.save();
+
         res.send(output);
     } catch (err) {
         res.status(500).send(err);
@@ -23,10 +33,9 @@ productRoute.post("/", async (req: Request, res: Response) => {
 })
 
 productRoute.get("/:id", async (req: Request, res: Response) => {
-    const { id } = req.params
-    const productFacade = ProductAdmFacadeFactory.create();
-
     try {
+        const { id } = req.params
+        const productFacade = ProductAdmFacadeFactory.create();
         const input = { productId: id };
         const output = await productFacade.checkStock(input);
         res.send(output);

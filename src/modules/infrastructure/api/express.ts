@@ -11,6 +11,7 @@ import { InvoiceModel } from "../../invoice/repository/invoice.model";
 import { InvoiceItemsModel } from "../../invoice/repository/invoice-items.model";
 import { ProductAdmModel } from "../../product-adm/repository/product.model";
 import ProductCatalogModel from "../../store-catalog/repository/product.model";
+import TransactionModel from "../../payment/repository/transaction.model";
 
 export const app: Express = express();
 
@@ -35,6 +36,7 @@ async function setupDb() {
       ProductCatalogModel,
       OrderModel,
       OrderProductModel,
+      TransactionModel,
       InvoiceModel,
       InvoiceItemsModel
     ]

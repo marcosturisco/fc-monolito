@@ -5,8 +5,10 @@ export const invoiceRoute = express.Router();
 
 invoiceRoute.get("/:id", async (req: Request, res: Response) => {
     try {
+        const { id } = req.params;
         const invoiceFacade = InvoiceFacadeFactory.create();
-        const output = invoiceFacade.find({ id: req.body.invoiceId });
+        const output = await invoiceFacade.find({ id: id });
+
         res.send(output);
     } catch (err) {
         res.status(500).send(err);

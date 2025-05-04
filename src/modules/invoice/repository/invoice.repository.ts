@@ -32,7 +32,12 @@ export default class InvoiceRepository implements InvoiceGateway {
     }
 
     async find(id: string): Promise<Invoice> {
-        const invoice = await InvoiceModel.findOne({ where: { id } })
+        const invoice = await InvoiceModel.findOne(
+            {
+                where: { id },
+                include: [{ model: InvoiceItemsModel }]
+            }
+        )
 
         if (!invoice) {
             throw new Error("Invoice not found")
