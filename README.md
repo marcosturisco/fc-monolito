@@ -4,3 +4,5 @@ Example of a monolithic system developed sustainably by applying software engine
 # migration
 $ npx sequelize-cli migration:generate --name create-table-products
 $ npx sequelize-cli db:migrate
+$ npm install umzug
+$ npm run migrate up

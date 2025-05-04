@@ -12,6 +12,7 @@ import { InvoiceItemsModel } from "../../invoice/repository/invoice-items.model"
 import { ProductAdmModel } from "../../product-adm/repository/product.model";
 import ProductCatalogModel from "../../store-catalog/repository/product.model";
 import TransactionModel from "../../payment/repository/transaction.model";
+import { migrator } from "../../../migrations/config/migrator";
 
 export const app: Express = express();
 
@@ -26,9 +27,10 @@ export let sequelize: Sequelize;
 async function setupDb() {
   sequelize = new Sequelize({
     dialect: "sqlite",
-    storage: "./dev.sqlite",
+    storage: "./database.sqlite",
     logging: false,
   });
+
   await sequelize.addModels(
     [
       ClientModel,
@@ -41,6 +43,18 @@ async function setupDb() {
       InvoiceItemsModel
     ]
   );
-  await sequelize.sync();
-}
-setupDb();
+
+  await ClientModel.sync();
+  await OrderModel.sync();
+  await OrderProductModel.sync();
+  await TransactionModel.sync();
+  await InvoiceModel.sync();
+  await InvoiceItemsModel.sync();
+
+  const migration = migrator(sequelize);
+  await migration.up();
+};
+
+setupDb().then(() => {
+  console.log("Database setup complete");
+});

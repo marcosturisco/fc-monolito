@@ -22,7 +22,7 @@ productRoute.post("/", async (req: Request, res: Response) => {
         }
         const output = await productAdmFacade.addProduct(inputAdmProduct);
 
-        const productCatalog = await ProductCatalogModel.findOne({ where: { id: id } });
+        const productCatalog = await ProductCatalogModel.findOne({ where: { id: output.id } });
         productCatalog.salesPrice = salesPrice;
         await productCatalog.save();
 
