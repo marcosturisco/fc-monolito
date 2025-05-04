@@ -1,6 +1,6 @@
 import Id from "../../@shared/domain/value-object/id.value-object";
 import { ClientModel } from "../../client-adm/repository/client.model";
-import ProductModel from "../../store-catalog/repository/product.model";
+import ProductCatalogModel from "../../store-catalog/repository/product.model";
 import Client from "../domain/client.entity";
 import Order from "../domain/order.entity";
 import Product from "../domain/product.entity";
@@ -31,7 +31,7 @@ export default class OrderRepository implements CheckoutGateway {
 
         const orderProducts = await OrderProductModel.findAll({ where: { orderId: id } });
         const productIds = orderProducts.map(op => op.productId);
-        const productsData = await ProductModel.findAll({
+        const productsData = await ProductCatalogModel.findAll({
             where: { id: productIds }
         });
         const products = productsData.map(p => new Product({

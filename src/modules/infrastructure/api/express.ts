@@ -9,7 +9,8 @@ import { OrderModel } from "../../checkout/repository/order.model";
 import { OrderProductModel } from "../../checkout/repository/order-product.model";
 import { InvoiceModel } from "../../invoice/repository/invoice.model";
 import { InvoiceItemsModel } from "../../invoice/repository/invoice-items.model";
-import { ProductModel } from "../../product-adm/repository/product.model";
+import { ProductAdmModel } from "../../product-adm/repository/product.model";
+import ProductCatalogModel from "../../store-catalog/repository/product.model";
 
 export const app: Express = express();
 
@@ -24,13 +25,14 @@ export let sequelize: Sequelize;
 async function setupDb() {
   sequelize = new Sequelize({
     dialect: "sqlite",
-    storage: ":memory:",
+    storage: "./dev.sqlite",
     logging: false,
   });
   await sequelize.addModels(
     [
       ClientModel,
-      ProductModel,
+      ProductAdmModel,
+      ProductCatalogModel,
       OrderModel,
       OrderProductModel,
       InvoiceModel,

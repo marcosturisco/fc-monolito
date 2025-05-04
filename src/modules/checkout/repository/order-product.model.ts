@@ -1,6 +1,6 @@
 import { Column, Model, Table, ForeignKey } from "sequelize-typescript";
 import { OrderModel } from "./order.model";
-import ProductModel from "../../store-catalog/repository/product.model";
+import ProductCatalogModel from "../../store-catalog/repository/product.model";
 
 @Table({
     tableName: "order_products",
@@ -11,7 +11,7 @@ export class OrderProductModel extends Model {
     @Column
     orderId: string;
 
-    @ForeignKey(() => ProductModel)
+    @ForeignKey(() => ProductCatalogModel)
     @Column
     productId: string;
 }
