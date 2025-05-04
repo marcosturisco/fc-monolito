@@ -1,5 +1,5 @@
 import { HasMany, Model, AllowNull, Column, PrimaryKey, Table } from "sequelize-typescript";
-import { InvoiceItemsModel } from "./invoiceItems.model";
+import { InvoiceItemsModel } from "./invoice-items.model";
 
 @Table({
     tableName: "invoice",
