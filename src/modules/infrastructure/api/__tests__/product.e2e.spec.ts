@@ -1,34 +1,39 @@
+import express, { Express } from "express";
 import request from "supertest";
-import { app, sequelize } from "../express";
 import { migrator } from "../../../../migrations/config/migrator";
 import { Sequelize } from "sequelize-typescript";
 import { ProductAdmModel } from "../../../product-adm/repository/product.model";
 import ProductCatalogModel from "../../../store-catalog/repository/product.model";
 import { Umzug } from "umzug";
+import { productRoute } from "../routes/product.route";
 
 describe("E2E test for product", () => {
     let sequelize: Sequelize;
     let migration: Umzug<any>;
+
+    const app = express();
+    app.use(express.json());
+    app.use("/product", productRoute);
 
     beforeEach(async () => {
         sequelize = new Sequelize({
             dialect: 'sqlite',
             storage: ":memory:",
             logging: false
-        })
+        });
 
-        sequelize.addModels([ProductAdmModel, ProductCatalogModel])
-        migration = migrator(sequelize)
-        await migration.up()
+        sequelize.addModels([ProductAdmModel, ProductCatalogModel]);
+        migration = migrator(sequelize);
+        await migration.up();
     })
 
     afterEach(async () => {
         if (!migration || !sequelize) {
             return
-        }
-        migration = migrator(sequelize)
-        await migration.down()
-        await sequelize.close()
+        };
+        migration = migrator(sequelize);
+        await migration.down();
+        await sequelize.close();
     })
 
     it("should create a product", async () => {

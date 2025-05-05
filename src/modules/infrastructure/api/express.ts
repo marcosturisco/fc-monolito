@@ -31,29 +31,29 @@ async function setupDb() {
     logging: false,
   });
 
-  await sequelize.addModels(
-    [
-      ClientModel,
-      ProductAdmModel,
-      ProductCatalogModel,
-      OrderModel,
-      OrderProductModel,
-      TransactionModel,
-      InvoiceModel,
-      InvoiceItemsModel
-    ]
-  );
+  const migrationModels = [
+    ProductAdmModel,
+    ProductCatalogModel,
+  ];
 
-  await ClientModel.sync();
-  await OrderModel.sync();
-  await OrderProductModel.sync();
-  await TransactionModel.sync();
-  await InvoiceModel.sync();
-  await InvoiceItemsModel.sync();
+  const syncModels = [
+    ClientModel,
+    OrderModel,
+    OrderProductModel,
+    TransactionModel,
+    InvoiceModel,
+    InvoiceItemsModel,
+  ];
 
+  await sequelize.addModels(syncModels);
+  for (const model of syncModels) {
+    await model.sync();
+  }
+
+  await sequelize.addModels(migrationModels);
   const migration = migrator(sequelize);
   await migration.up();
-};
+}
 
 setupDb().then(() => {
   console.log("Database setup complete");

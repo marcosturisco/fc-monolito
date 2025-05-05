@@ -1,15 +1,29 @@
+import express, { Express } from "express";
 import request from "supertest";
-import { app, sequelize } from "../express";
+import { Sequelize } from "sequelize-typescript";
 import { ClientModel } from "../../../client-adm/repository/client.model";
+import { clientRoute } from "../routes/client.route";
 
 describe("E2E test for client", () => {
+    let sequelize: Sequelize;
+
+    const app = express();
+    app.use(express.json());
+    app.use("/client", clientRoute);
+
     beforeEach(async () => {
-        await sequelize.sync({ alter: true });
-      });
-    
-      afterAll(async () => {
+        sequelize = new Sequelize({
+            dialect: 'sqlite',
+            storage: ":memory:",
+            logging: false
+        })
+        sequelize.addModels([ClientModel])
+        await sequelize.sync({ force: true });
+    });
+
+    afterAll(async () => {
         await sequelize.close();
-      });
+    });
 
     it("should create a client", async () => {
         const input = {
