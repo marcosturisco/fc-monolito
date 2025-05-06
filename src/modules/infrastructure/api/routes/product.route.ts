@@ -9,6 +9,7 @@ export const productRoute = express.Router();
 
 productRoute.post("/", async (req: Request, res: Response) => {
     const productAdmFacade = ProductAdmFacadeFactory.create();
+    const productCatalogFacade = StoreCatalogFacadeFactory.create();
 
     try {
         const id = uuidv4();
@@ -21,10 +22,7 @@ productRoute.post("/", async (req: Request, res: Response) => {
             stock: stock
         }
         const output = await productAdmFacade.addProduct(inputAdmProduct);
-
-        const productCatalog = await ProductCatalogModel.findOne({ where: { id: output.id } });
-        productCatalog.salesPrice = salesPrice;
-        await productCatalog.save();
+        await productCatalogFacade.update({ id: output.id, salesPrice: salesPrice });
 
         res.send(output);
     } catch (err) {

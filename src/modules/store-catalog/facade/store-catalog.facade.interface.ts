@@ -18,9 +18,20 @@ export interface FindAllStoreCatalogFacadeOutputDto {
   }[];
 }
 
+export interface UpdateCatalogFacadeInputDto {
+  id: string;
+  salesPrice: number;
+}
+
+export interface UpdateCatalogFacadeOutputDto {
+  id: string;
+  name: string;
+  description: string;
+  salesPrice: number;
+}
+
 export default interface StoreCatalogFacadeInterface {
-  find(
-    id: FindStoreCatalogFacadeInputDto
-  ): Promise<FindStoreCatalogFacadeOutputDto>;
+  find(id: FindStoreCatalogFacadeInputDto): Promise<FindStoreCatalogFacadeOutputDto>;
   findAll(): Promise<FindAllStoreCatalogFacadeOutputDto>;
+  update(input: UpdateCatalogFacadeInputDto): Promise<UpdateCatalogFacadeOutputDto>;
 }
