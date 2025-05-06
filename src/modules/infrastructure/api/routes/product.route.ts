@@ -1,28 +1,21 @@
 import express, { Request, Response } from "express";
-import { v4 as uuidv4 } from 'uuid';
 import ProductAdmFacadeFactory from "../../../product-adm/factory/facade.factory";
-import Id from "../../../@shared/domain/value-object/id.value-object";
-import StoreCatalogFacadeFactory from "../../../store-catalog/factory/facade.factory";
-import ProductCatalogModel from "../../../store-catalog/repository/product.model";
 
 export const productRoute = express.Router();
 
 productRoute.post("/", async (req: Request, res: Response) => {
-    const productAdmFacade = ProductAdmFacadeFactory.create();
-    const productCatalogFacade = StoreCatalogFacadeFactory.create();
+    const productFacade = ProductAdmFacadeFactory.create();
 
     try {
-        const id = uuidv4();
         const { name, description, purchasePrice, stock, salesPrice } = req.body;
-        const inputAdmProduct = {
-            id: id,
+        const input = {
             name: name,
             description: description,
             purchasePrice: purchasePrice,
-            stock: stock
+            stock: stock,
+            salesPrice: salesPrice
         }
-        const output = await productAdmFacade.addProduct(inputAdmProduct);
-        await productCatalogFacade.update({ id: output.id, salesPrice: salesPrice });
+        const output = await productFacade.register(input);
 
         res.send(output);
     } catch (err) {

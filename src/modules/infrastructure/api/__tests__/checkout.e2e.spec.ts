@@ -96,6 +96,7 @@ describe("E2E test for checkout", () => {
         const clientResponse = await request(app).post("/client").send(inputClient);
         const product1Response = await request(app).post("/product").send(inputProduct1);
         const product2Response = await request(app).post("/product").send(inputProduct2);
+
         const inputOrder = {
             "clientId": clientResponse.body.id,
             "products": [

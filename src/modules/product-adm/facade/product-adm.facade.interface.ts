@@ -17,9 +17,25 @@ export interface CheckStockFacadeOutputDto {
   stock: number;
 }
 
+export interface RegisterProductFacadeInputDto {
+  id?: string;
+  name: string;
+  description: string;
+  purchasePrice: number;
+  stock: number;
+  salesPrice: number
+}
+
+export interface RegisterProductFacadeOutputDto {
+  id: string;
+  name: string;
+  description: string;
+  purchasePrice: number;
+  stock: number
+}
+
 export default interface ProductAdmFacadeInterface {
   addProduct(input: AddProductFacadeInputDto): Promise<AddProductOutputDto>;
-  checkStock(
-    input: CheckStockFacadeInputDto
-  ): Promise<CheckStockFacadeOutputDto>;
+  checkStock(input: CheckStockFacadeInputDto): Promise<CheckStockFacadeOutputDto>;
+  register(input: RegisterProductFacadeInputDto): Promise<RegisterProductFacadeOutputDto>;
 }
