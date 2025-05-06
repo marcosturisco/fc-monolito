@@ -57,6 +57,7 @@ describe("Register a product usecase unit test", () => {
         const resultFind = await productFindUseCase.execute(inputFind);
 
         expect(productCatalogRepository.update).toHaveBeenCalled();
+        expect(productCatalogRepository.update).toHaveBeenCalledWith("1", 200);
         expect(resultUpdate.id).toBe(productToBeRegistered.id);
         expect(resultUpdate.name).toBe(productToBeRegistered.name);
         expect(resultUpdate.description).toBe(productToBeRegistered.description);
